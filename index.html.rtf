@@ -1,0 +1,342 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="en">\
+<head>\
+    <meta charset="UTF-8">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+    <title>Poll for Messages</title>\
+    <script src="https://cdn.tailwindcss.com"></script>\
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">\
+    <style>\
+        body \{\
+            font-family: 'Inter', sans-serif;\
+            -webkit-font-smoothing: antialiased;\
+            -moz-osx-font-smoothing: grayscale;\
+        \}\
+\
+        /* Gradient Background */\
+        .body-gradient \{\
+            background-color: #e0f2f1; /* Fallback */\
+            background-image: linear-gradient(to bottom, #e8f0fe, #e0f2f1 80%);\
+        \}\
+\
+        .dark .body-gradient \{\
+            background-color: #132c2a; /* Fallback */\
+            background-image: linear-gradient(to bottom, #1d2a3f, #132c2a 80%);\
+        \}\
+\
+        /* Material Design 3 Inspired Custom Styles */\
+        :root \{\
+            --md-sys-color-primary: #1967d2;\
+            --md-sys-color-on-primary: #ffffff;\
+            --md-sys-color-surface: #fdfbff;\
+            --md-sys-color-surface-variant: #e1e2ec;\
+            --md-sys-color-on-surface: #1b1b1f;\
+            --md-sys-color-on-surface-variant: #44474f;\
+            --md-sys-color-outline: #74777f;\
+            --md-sys-color-primary-container: #d7e3ff;\
+            --md-sys-color-on-primary-container: #001d36;\
+        \}\
+\
+        .dark \{\
+            --md-sys-color-primary: #a8c7fa;\
+            --md-sys-color-on-primary: #003258;\
+            --md-sys-color-surface: #1d1b20;\
+            --md-sys-color-surface-variant: #44474f;\
+            --md-sys-color-on-surface: #e6e1e5;\
+            --md-sys-color-on-surface-variant: #c4c6d0;\
+            --md-sys-color-outline: #8e9099;\
+            --md-sys-color-primary-container: #00497d;\
+            --md-sys-color-on-primary-container: #d7e3ff;\
+        \}\
+        \
+        .m3-surface \{\
+             background-color: var(--md-sys-color-surface);\
+        \}\
+\
+        .m3-on-surface \{\
+            color: var(--md-sys-color-on-surface);\
+        \}\
+\
+        .m3-filled-button \{\
+            background-color: var(--md-sys-color-primary);\
+            color: var(--md-sys-color-on-primary);\
+            transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;\
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);\
+        \}\
+        .m3-filled-button:hover \{\
+            box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);\
+        \}\
+        \
+        .m3-text-button \{\
+            color: var(--md-sys-color-primary);\
+        \}\
+\
+        .m3-text-field \{\
+            background-color: var(--md-sys-color-surface-variant);\
+            color: var(--md-sys-color-on-surface);\
+            border-bottom: 1px solid var(--md-sys-color-on-surface-variant);\
+            transition: border-color 0.2s ease-in-out;\
+        \}\
+        .m3-text-field:focus \{\
+            outline: none;\
+            border-bottom: 2px solid var(--md-sys-color-primary);\
+        \}\
+        \
+        .m3-progress-bar \{\
+            background-color: var(--md-sys-color-primary-container);\
+        \}\
+        .m3-progress-bar > div \{\
+             background-color: var(--md-sys-color-primary);\
+        \}\
+\
+    </style>\
+</head>\
+<body class="body-gradient flex items-center justify-center min-h-screen">\
+\
+    <main class="w-full max-w-md mx-auto p-4">\
+        <div id="app-container" class="m3-surface rounded-3xl shadow-2xl overflow-hidden">\
+\
+            <!-- App Header -->\
+            <header class="p-4 text-center" style="background-color: #1a73e8;">\
+                <h1 class="text-xl font-bold text-white">Poll for Messages</h1>\
+            </header>\
+\
+            <!-- Poll Creation View -->\
+            <div id="create-view" class="p-6 space-y-6">\
+                <h2 class="text-xl font-medium text-center m3-on-surface">Create a New Poll</h2>\
+                <div>\
+                    <label for="poll-question" class="block text-sm font-medium m3-on-surface-variant mb-1">Question</label>\
+                    <input type="text" id="poll-question" class="m3-text-field block w-full rounded-t-lg px-3 py-3 border-b" placeholder="e.g., Where to for lunch?">\
+                </div>\
+                <div id="poll-options-container" class="space-y-3">\
+                    <label class="block text-sm font-medium m3-on-surface-variant mb-1">Options</label>\
+                    <input type="text" class="poll-option-input m3-text-field block w-full rounded-t-lg px-3 py-2 border-b" placeholder="Option 1">\
+                    <input type="text" class="poll-option-input m3-text-field block w-full rounded-t-lg px-3 py-2 border-b" placeholder="Option 2">\
+                </div>\
+                <button id="add-option-btn" class="m3-text-button w-full flex items-center justify-center text-sm font-medium py-2 rounded-full">\
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>\
+                    Add Option\
+                </button>\
+                <button id="create-poll-btn" class="m3-filled-button w-full font-semibold py-3 px-4 rounded-full text-base tracking-wide">\
+                    Create & Share\
+                </button>\
+            </div>\
+\
+            <!-- Poll Voting/Results View -->\
+            <div id="poll-view" class="p-6 hidden space-y-5">\
+                <h2 id="display-question" class="text-2xl font-medium text-center m3-on-surface"></h2>\
+                <div id="display-options" class="space-y-3">\
+                    <!-- Poll options will be dynamically inserted here -->\
+                </div>\
+                <div id="share-view" class="hidden pt-4">\
+                     <p class="text-sm text-center m3-on-surface-variant mb-2">Copy this link to share your poll:</p>\
+                    <div class="flex items-center space-x-2">\
+                        <input type="text" id="share-link-input" readonly class="w-full text-sm p-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-none">\
+                        <button id="copy-link-btn" class="bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 font-semibold py-2 px-4 rounded-full text-sm m3-on-surface">Copy</button>\
+                    </div>\
+                     <p id="copy-confirm" class="text-center text-green-500 text-xs mt-2 opacity-0 transition-opacity">Copied!</p>\
+                </div>\
+                 <button id="back-to-create-btn" class="m3-text-button w-full text-center text-sm font-medium py-2 rounded-full mt-4">Create Another Poll</button>\
+            </div>\
+        </div>\
+        <footer class="text-center text-xs text-gray-500 dark:text-gray-300 mt-6">\
+            <p>A concept for RCS Polling by Gemini</p>\
+        </footer>\
+    </main>\
+\
+    <script>\
+        // DOM Elements\
+        const createView = document.getElementById('create-view');\
+        const pollView = document.getElementById('poll-view');\
+        const shareView = document.getElementById('share-view');\
+        const pollQuestionInput = document.getElementById('poll-question');\
+        const pollOptionsContainer = document.getElementById('poll-options-container');\
+        const addOptionBtn = document.getElementById('add-option-btn');\
+        const createPollBtn = document.getElementById('create-poll-btn');\
+        const displayQuestion = document.getElementById('display-question');\
+        const displayOptions = document.getElementById('display-options');\
+        const shareLinkInput = document.getElementById('share-link-input');\
+        const copyLinkBtn = document.getElementById('copy-link-btn');\
+        const copyConfirm = document.getElementById('copy-confirm');\
+        const backToCreateBtn = document.getElementById('back-to-create-btn');\
+\
+        let pollData = \{\};\
+        let hasVoted = false;\
+\
+        // --- Event Listeners ---\
+        addOptionBtn.addEventListener('click', () => \{\
+            const optionInputs = pollOptionsContainer.querySelectorAll('.poll-option-input');\
+            if (optionInputs.length < 10) \{\
+                const newOptionInput = document.createElement('input');\
+                newOptionInput.type = 'text';\
+                newOptionInput.className = 'poll-option-input m3-text-field block w-full rounded-t-lg px-3 py-2 border-b';\
+                newOptionInput.placeholder = `Option $\{optionInputs.length + 1\}`;\
+                pollOptionsContainer.appendChild(newOptionInput);\
+                newOptionInput.focus();\
+            \}\
+        \});\
+\
+        createPollBtn.addEventListener('click', () => \{\
+            const question = pollQuestionInput.value.trim();\
+            const optionInputs = Array.from(pollOptionsContainer.querySelectorAll('.poll-option-input'));\
+            const options = optionInputs\
+                .map(input => (\{ text: input.value.trim(), votes: 0 \}))\
+                .filter(option => option.text !== '');\
+\
+            if (question && options.length >= 2) \{\
+                pollData = \{ question, options \};\
+                hasVoted = false;\
+                updatePollView();\
+                switchToPollView();\
+                generateShareLink();\
+            \} else \{\
+                alert('Please provide a question and at least two options.');\
+            \}\
+        \});\
+\
+        backToCreateBtn.addEventListener('click', () => \{\
+            switchToCreateView();\
+        \});\
+\
+        copyLinkBtn.addEventListener('click', () => \{\
+            shareLinkInput.select();\
+            try \{\
+                document.execCommand('copy');\
+                copyConfirm.classList.remove('opacity-0');\
+                setTimeout(() => copyConfirm.classList.add('opacity-0'), 2000);\
+            \} catch (err) \{\
+                console.error('Fallback: Oops, unable to copy', err);\
+                alert('Could not copy link. Please copy it manually.');\
+            \}\
+        \});\
+\
+        // --- Core Functions ---\
+        function switchToPollView() \{\
+            createView.classList.add('hidden');\
+            pollView.classList.remove('hidden');\
+            shareView.classList.remove('hidden');\
+        \}\
+\
+        function switchToCreateView() \{\
+            pollView.classList.add('hidden');\
+            shareView.classList.add('hidden');\
+            createView.classList.remove('hidden');\
+\
+            pollQuestionInput.value = '';\
+            const optionInputs = pollOptionsContainer.querySelectorAll('.poll-option-input');\
+            for(let i = optionInputs.length - 1; i >= 2; i--) \{\
+                optionInputs[i].remove();\
+            \}\
+            optionInputs.forEach((input, index) => \{\
+                input.value = '';\
+                input.placeholder = `Option $\{index + 1\}`;\
+            \});\
+        \}\
+\
+        function updatePollView() \{\
+            displayQuestion.textContent = pollData.question;\
+            displayOptions.innerHTML = '';\
+\
+            const totalVotes = pollData.options.reduce((sum, option) => sum + option.votes, 0);\
+\
+            pollData.options.forEach((option, index) => \{\
+                const percentage = totalVotes > 0 ? Math.round((option.votes / totalVotes) * 100) : 0;\
+                \
+                const optionWrapper = document.createElement('div');\
+                optionWrapper.className = 'space-y-2';\
+\
+                const contentContainer = document.createElement('div');\
+                contentContainer.className = 'flex items-center justify-between text-base';\
+                \
+                const optionText = document.createElement('span');\
+                optionText.className = 'font-medium m3-on-surface';\
+                optionText.textContent = option.text;\
+                \
+                contentContainer.appendChild(optionText);\
+\
+                if (hasVoted) \{\
+                    const voteInfo = document.createElement('span');\
+                    voteInfo.className = 'font-medium text-sm m3-on-surface-variant';\
+                    voteInfo.textContent = `$\{percentage\}%`;\
+                    contentContainer.appendChild(voteInfo);\
+                \} else \{\
+                    const voteButton = document.createElement('button');\
+                    voteButton.textContent = 'Vote';\
+                    voteButton.className = 'm3-filled-button text-sm font-semibold py-1.5 px-5 rounded-full';\
+                    voteButton.dataset.index = index;\
+                    voteButton.addEventListener('click', handleVote);\
+                    contentContainer.appendChild(voteButton);\
+                \}\
+\
+                optionWrapper.appendChild(contentContainer);\
+\
+                if (hasVoted) \{\
+                    const progressContainer = document.createElement('div');\
+                    progressContainer.className = 'w-full m3-progress-bar rounded-full h-1.5';\
+                    \
+                    const progressBar = document.createElement('div');\
+                    progressBar.className = 'h-1.5 rounded-full transition-all duration-500';\
+                    progressBar.style.width = `$\{percentage\}%`;\
+\
+                    progressContainer.appendChild(progressBar);\
+                    optionWrapper.appendChild(progressContainer);\
+                \}\
+                \
+                displayOptions.appendChild(optionWrapper);\
+            \});\
+        \}\
+\
+        function handleVote(e) \{\
+            if (hasVoted) return;\
+            const selectedIndex = parseInt(e.target.dataset.index, 10);\
+            pollData.options[selectedIndex].votes++;\
+            hasVoted = true;\
+            localStorage.setItem(btoa(pollData.question), 'true'); // Remember vote\
+            generateShareLink();\
+            updatePollView();\
+        \}\
+\
+        function generateShareLink() \{\
+            const dataString = JSON.stringify(pollData);\
+            const encodedData = btoa(dataString);\
+            const url = `$\{window.location.origin\}$\{window.location.pathname\}?poll=$\{encodeURIComponent(encodedData)\}`;\
+            shareLinkInput.value = url;\
+        \}\
+\
+        function init() \{\
+            const urlParams = new URLSearchParams(window.location.search);\
+            const pollParam = urlParams.get('poll');\
+\
+            if (pollParam) \{\
+                try \{\
+                    const decodedData = atob(decodeURIComponent(pollParam));\
+                    pollData = JSON.parse(decodedData);\
+                    // Check if this specific user has voted on this specific poll\
+                    if (localStorage.getItem(btoa(pollData.question)) === 'true') \{\
+                         hasVoted = true;\
+                    \} else \{\
+                         const totalVotesOnInit = pollData.options.reduce((sum, option) => sum + option.votes, 0);\
+                         hasVoted = totalVotesOnInit > 0;\
+                    \}\
+                    updatePollView();\
+                    switchToPollView();\
+                \} catch (e) \{\
+                    console.error("Failed to parse poll data from URL:", e);\
+                    switchToCreateView();\
+                \}\
+            \}\
+        \}\
+\
+        // --- Initial Load ---\
+        init();\
+    </script>\
+</body>\
+</html>\
+}
